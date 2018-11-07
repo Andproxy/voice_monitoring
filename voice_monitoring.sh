@@ -109,7 +109,7 @@ echo "[`date +%F/%H:%M:%S`] HostGroup1 host ip address $mhost не доступ�
 #ru# Реплика для HostGroup2
 #en# Replica for HostGroup2
 function voice_HostGroup2 {
-echo "Пропал линк на порту!" | festival --tts --language russian
+echo "Пропал линк на восьмом порту!" | festival --tts --language russian
 echo $mhost | sed -r -e 's/[.]/ /g' | festival --tts --language russian
 echo "Повторяю!" | festival --tts --language russian
 echo $mhost | sed -r -e 's/[.]/ /g' | festival --tts --language russian
@@ -139,8 +139,8 @@ done
 #en# Determining the state of something by snmp (in the example, the presence of a link on the port cisco 1 is no link, 2 is a link)
 for mhost in $HostGroup2
 do
-if link_state=`snmpwalk -v 2c -c public $mhost 1.3.6.1.2.1.2.2.1.8.8`; then
-if [ "$lin_kstate" -lt 2 ]; then
+if link_state=`snmpwalk -v 2c -c cricket $mhost 1.3.6.1.2.1.2.2.1.8.8`; then
+if [ "$lin_kstate" -gt 1 ]; then
 voice_HostGroup2
 fi
 fi
