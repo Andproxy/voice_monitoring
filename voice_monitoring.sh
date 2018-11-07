@@ -98,23 +98,23 @@ fi
 #ru# Реплика для HostGroup1
 #en# Replica for HostGroup1
 function voice_HostGroup1 {
-echo "Сервер Аш эл эс не доступен!" | festival --tts --language russian
+echo "хост не доступен!" | festival --tts --language russian
 echo $mhost | sed -r -e 's/[.]/ /g' | festival --tts --language russian
 echo "Повторяю!" | festival --tts --language russian
 echo $mhost | sed -r -e 's/[.]/ /g' | festival --tts --language russian
 random_speech
-echo "[`date +%F/%H:%M:%S`] HostGroup1 server ip address $mhost не доступен!" | sendxmpp username1@jabber.com username2@jabber.com username3@jabber.com
+echo "[`date +%F/%H:%M:%S`] HostGroup1 host ip address $mhost не доступен!" | sendxmpp username1@jabber.com username2@jabber.com username3@jabber.com
 }
 
 #ru# Реплика для HostGroup2
 #en# Replica for HostGroup2
 function voice_HostGroup2 {
-echo "Кэшш сервер аш эл эс не доступен!" | festival --tts --language russian
+echo "Пропал линк на порту!" | festival --tts --language russian
 echo $mhost | sed -r -e 's/[.]/ /g' | festival --tts --language russian
 echo "Повторяю!" | festival --tts --language russian
 echo $mhost | sed -r -e 's/[.]/ /g' | festival --tts --language russian
 random_speech
-echo "[`date +%F/%H:%M:%S`] HostGroup1 server ip address $mhost не доступен!" | sendxmpp username1@jabber.com username2@jabber.com username3@jabber.com
+echo "[`date +%F/%H:%M:%S`] HostGroup2 cisco catalyst $mhost  нет линка на порту 8!" | sendxmpp username1@jabber.com username2@jabber.com username3@jabber.com
 }
 
 
@@ -139,7 +139,7 @@ done
 #en# Determining the state of something by snmp (in the example, the presence of a link on the port cisco 1 is no link, 2 is a link)
 for mhost in $HostGroup2
 do
-if link_state=`snmpwalk -v 2c -c public $mhost 1.3.6.1.2.1.2.2.1.8`; then
+if link_state=`snmpwalk -v 2c -c public $mhost 1.3.6.1.2.1.2.2.1.8.8`; then
 if [ "$lin_kstate" -lt 2 ]; then
 voice_HostGroup2
 fi
