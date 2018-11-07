@@ -6,22 +6,26 @@
 #                                             #
 ###############################################
 
-#ru# Список хостов через разделенные пробелом, доступность узла определяется по ping.
+#ru# Список хостов через разделенные пробелом, доступность узла проверяется утилитой ping.
 #en# The list of hosts separated by a space, the node availability is determined by ping.
+
 HostGroup1="192.168.35.1 192.168.35.2 192.168.35.3 192.168.35.5"
 
 #ru# Список хостов разделенные пробелом, мониторинг чего-нибудь по snmp.
 #en# The list of hosts separated by a space, monitoring something on snmp.
+
 HostGroup2="192.168.15.5 192.168.15.6 192.168.15.34 192.168.15.34"
 
 
-#ru# Случайное целое число для random реплики. ( C добавлением новых фраз нужно увеличить range от нуля до + количество добавленных фраз. )
+#ru# Случайное целое число для случайной реплики. ( C добавлением новых фраз нужно увеличить range от нуля до + количество добавленных фраз. )
 #en# Random integer for random replicas. (With the addition of new phrases, you need to increase the range from zero to + the number of added phrases.)
+
 random_roll=`echo "$((0 + RANDOM % 19))"`
 
 
 #ru# Словарь случайных реплик
 #en# Random Replica Dictionary
+
 speech1="Но, это, не точно!"
 speech2="Советую, проверить!"
 speech3="Вам скоро позвонят?"
@@ -97,6 +101,7 @@ fi
 
 #ru# Реплика для HostGroup1
 #en# Replica for HostGroup1
+
 function voice_HostGroup1 {
 echo "хост не доступен!" | festival --tts --language russian
 echo $mhost | sed -r -e 's/[.]/ /g' | festival --tts --language russian
@@ -108,6 +113,7 @@ echo "[`date +%F/%H:%M:%S`] HostGroup1 host ip address $mhost не доступ�
 
 #ru# Реплика для HostGroup2
 #en# Replica for HostGroup2
+
 function voice_HostGroup2 {
 echo "Пропал линк на восьмом порту!" | festival --tts --language russian
 echo $mhost | sed -r -e 's/[.]/ /g' | festival --tts --language russian
@@ -120,10 +126,12 @@ echo "[`date +%F/%H:%M:%S`] HostGroup2 cisco catalyst $mhost  нет линка 
 
 #ru# Количество пингов для проверки доступности
 #en# Number of pings to check availability
+
 COUNT=1
 
 #ru# Определение доступности хоста по ping
 #en# Determining the availability of a host by ping
+
 for mhost in $HostGroup1
 do
 count=$(ping -c $COUNT $mhost | grep 'received' | awk -F',' '{ print $2 }' | awk '{ print $1 }')
@@ -137,6 +145,7 @@ done
 
 #ru# Определение состояния чего-нибудь по snmp (в примере наличие линка на порту cisco 1-нет линка, 2-есть линк)
 #en# Determining the state of something by snmp (in the example, the presence of a link on the port cisco 1 is no link, 2 is a link)
+
 for mhost in $HostGroup2
 do
 if link_state=`snmpwalk -v 2c -c cricket $mhost 1.3.6.1.2.1.2.2.1.8.8`; then
